@@ -7,29 +7,34 @@ import {
   StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
-import { handleInitialData } from "../actions";
+import { handleInitialData, removeDeck } from "../actions";
 import { white, blue, gray } from "../utils/colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { removeDeckAPI } from "../utils/api";
 
 export class Decks extends Component {
   componentDidMount() {
     this.props.handleInitialData();
   }
+
   render() {
-    console.log(this.props.decks);
+    console.log(this.props);
+    const handleRemove = (title) => {
+      this.props.removeDeck(title);
+      removeDeckAPI(title);
+    };
     return (
       <ScrollView style={styles.decksWrapper}>
         <Text style={styles.title}>Mobile Flashcards</Text>
         <Text style={styles.subTitle}>Decks</Text>
 
         {Object.values(this.props.decks).map((deck, index) => {
-          console.log(deck);
           return (
             <TouchableOpacity
               key={index}
               onPress={() =>
-                this.props.navigation.navigate('DeckDetails', { 
-                  title: deck.title 
+                this.props.navigation.navigate("DeckDetails", {
+                  title: deck.title,
                 })
               }
             >
@@ -42,10 +47,10 @@ export class Decks extends Component {
                     ? "No cards in this deck"
                     : `Number of cards is: ${deck.questions.length}`}
                 </Text>
-                <TouchableOpacity onPress={() => console.log("removed")}>
+                <TouchableOpacity onPress={() => handleRemove(deck.title)}>
                   <FontAwesome
                     name="trash"
-                    size={25}
+                    size={30}
                     color="tomato"
                     style={{ textAlign: "right" }}
                   />
@@ -100,4 +105,6 @@ const mapStateToProps = (state) => ({
   decks: state,
 });
 
-export default connect(mapStateToProps, { handleInitialData })(Decks);
+export default connect(mapStateToProps, { handleInitialData, removeDeck })(
+  Decks
+);
