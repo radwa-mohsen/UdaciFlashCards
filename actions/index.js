@@ -1,18 +1,18 @@
-import { getDecks } from '../utils/api';
+import { getDecks } from "../utils/api";
 
-export const GET_DECKS = 'GET_DECKS';
+export const GET_DECKS = "GET_DECKS";
 
 function getDecksList(decks) {
   return {
     type: GET_DECKS,
-    decks
+    decks,
   };
 }
 
 export function handleInitialData() {
-  return dispatch => {
-    return getDecks().then(decks => {
-      dispatch(getDecksList(decks));
+  return (dispatch) => {
+    return getDecks().then((decks) => {
+      return dispatch(getDecksList(decks));
     });
   };
 }
