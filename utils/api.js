@@ -28,3 +28,11 @@ export async function addNewDeck(title) {
     })
   );
 }
+
+export async function removeDeckAPI(key) {
+  const results = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
+  const decks = JSON.parse(results);
+  decks[key] = undefined;
+  delete decks[key];
+  AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+}
