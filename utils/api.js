@@ -16,3 +16,15 @@ export async function getDecks() {
     console.log(err);
   }
 }
+
+export async function addNewDeck(title) {
+  await AsyncStorage.mergeItem(
+    FLASHCARD_STORAGE_KEY,
+    JSON.stringify({
+      [title]: {
+        title,
+        questions: [],
+      },
+    })
+  );
+}
