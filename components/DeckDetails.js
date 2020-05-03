@@ -21,14 +21,16 @@ function DeckDetails(props) {
       </Text>
       <TouchableOpacity
         style={[styles.btn, { marginTop: 20 }]}
-        onPress={()=> navigation.navigate('AddCard' , {deck : deck})}
+        onPress={() => navigation.navigate("AddCard", { deck: deck })}
       >
         <Text style={styles.text}>Add Card</Text>
       </TouchableOpacity>
       {deck.questions.length !== 0 && (
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate("StartQuiz", { title: deck.title })}
+          onPress={() =>
+            navigation.navigate("StartQuiz", { title: deck.title })
+          }
         >
           <Text style={styles.text}>Start Quiz</Text>
         </TouchableOpacity>
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 8,
     backgroundColor: blue,
+    borderRadius: 5,
   },
   text: {
     fontSize: 18,
