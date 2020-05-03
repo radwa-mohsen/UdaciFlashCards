@@ -6,7 +6,8 @@ import { blue } from "./utils/colors";
 import reducer from "./reducers";
 import middleware from "./middleware";
 import { createStore } from "redux";
-import MainNavigator from "./Navigation/MainNavigator";
+import MainNav from "./Navigation/MainNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 const store = createStore(reducer, middleware);
 
@@ -23,7 +24,9 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <FlashCardsStatusBar backgroundColor={blue} barStyle="light-content" />
-        <MainNavigator />
+        <NavigationContainer>
+          <MainNav />
+        </NavigationContainer>
       </Provider>
     );
   }

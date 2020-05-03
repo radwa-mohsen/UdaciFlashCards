@@ -1,15 +1,16 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import {createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Decks from "../components/Decks";
 import AddDeck from "../components/AddDeck";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import DeckDetails from "../components/DeckDetails";
+import { blue, white } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export function MainTabs() {
   return (
-    <NavigationContainer>
       <Tab.Navigator
         initialRouteName="Decks"
         screenOptions={({ route }) => ({
@@ -34,6 +35,30 @@ export default function App() {
         <Tab.Screen name="Decks" component={Decks} />
         <Tab.Screen name="Add Deck" component={AddDeck} />
       </Tab.Navigator>
-    </NavigationContainer>
+  );
+}
+
+const Stacks = createStackNavigator();
+
+export default function MainView() {
+  return (
+    <Stacks.Navigator headerMode="screen">
+      <Stacks.Screen
+        name="Home"
+        component={MainTabs}
+        options={{ headerShown: false }}
+      />
+      <Stacks.Screen
+        name="DeckDetails"
+        component={DeckDetails}
+        options={{
+          title: "Deck Details",
+          headerTintColor: white,
+          headerStyle: { backgroundColor: blue },
+          headerTitleStyle: { fontWeight: "bold" },
+        }}
+      />
+
+    </Stacks.Navigator>
   );
 }

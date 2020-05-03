@@ -27,7 +27,11 @@ export class Decks extends Component {
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => console.log("pressed!")}
+              onPress={() =>
+                this.props.navigation.navigate('DeckDetails', { 
+                  title: deck.title 
+                })
+              }
             >
               <View style={styles.card} key={index}>
                 <Text style={[styles.deckText, { fontWeight: "bold" }]}>
