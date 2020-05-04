@@ -21,7 +21,7 @@ function DeckDetails(props) {
       </Text>
       <TouchableOpacity
         style={[styles.btn, { marginTop: 20 }]}
-        onPress={() => navigation.navigate("AddCard", { deck: deck })}
+        onPress={() => navigation.navigate("AddCard", { ...deck })}
       >
         <Text style={styles.text}>Add Card</Text>
       </TouchableOpacity>

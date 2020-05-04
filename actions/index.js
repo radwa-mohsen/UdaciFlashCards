@@ -2,7 +2,8 @@ import { getDecks } from "../utils/api";
 
 export const GET_DECKS = "GET_DECKS";
 export const ADD_DECK = "ADD_DECK";
-export const REMOVE_DECK = "REMOVE_DECK"
+export const REMOVE_DECK = "REMOVE_DECK";
+export const ADD_CARD = "ADD_CARD";
 
 function getDecksList(decks) {
   return {
@@ -21,7 +22,15 @@ export function addDeck(title) {
 export function removeDeck(title) {
   return {
     type: REMOVE_DECK,
-    title
+    title,
+  };
+}
+
+export function addCard(title,question) {
+  return {
+    type: ADD_CARD,
+    title,
+    question,
   };
 }
 

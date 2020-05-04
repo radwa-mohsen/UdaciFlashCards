@@ -36,3 +36,17 @@ export async function removeDeckAPI(key) {
   delete decks[key];
   AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
 }
+
+export async function addQuestionAPI(title, question) {
+  const results = await AsyncStorage.getItem(FLASHCARD_STORAGE_KEY);
+  const deck = await JSON.parse(results)[title];
+
+  await AsyncStorage.mergeItem(
+    FLASHCARD_STORAGE_KEY,
+    JSON.stringify({
+      [title]: {
+        questions: [...deck.questions, question],
+      },
+    })
+  );
+}
