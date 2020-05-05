@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   btn: {
-    width: 100,
+    width: 140,
     padding: 8,
     margin: 8,
     backgroundColor: blue,

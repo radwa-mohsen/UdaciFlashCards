@@ -8,6 +8,7 @@ import middleware from "./middleware";
 import { createStore } from "redux";
 import MainNav from "./Navigation/MainNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import { setLocalNotification } from './utils/helpers';
 
 const store = createStore(reducer, middleware);
 
@@ -20,6 +21,9 @@ function FlashCardsStatusBar({ backgroundColor, ...props }) {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={store}>
