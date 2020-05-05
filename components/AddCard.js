@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
   Text,
@@ -11,62 +11,6 @@ import { gray, blue, white, red } from "../utils/colors";
 import { addCard } from "../actions/index";
 import { addQuestionAPI } from "../utils/api";
 
-export class AddCard extends Component {
-  state = {
-    question: "",
-    answer: "",
-  };
-  handleSubmit = () => {
-    this.props.addCard(this.props.title, {
-      question: this.state.question,
-      answer: this.state.answer,
-    });
-    addQuestionAPI(this.props.title, {
-      question: this.state.question,
-      answer: this.state.answer,
-    });
-    this.props.navigation.navigate("DeckDetails", {
-      title: this.props.title,
-    });
-  }; 
-  render() {
-    const disabled =
-      this.state.question === "" || this.state.answer === "" ? true : false;
-
-    return (
-      <View style={styles.wrapper}>
-        <View style={{ marginBottom: 8 }}>
-          <Text style={styles.label}>{this.props.title} Deck: </Text>
-          <Text style={styles.label}>Question: </Text>
-        </View>
-        <View style={{ marginBottom: 8 }}>
-          <TextInput
-            style={[styles.input, { marginBottom: 8 }]}
-            placeholder="Enter The Question...*"
-            value={this.state.question}
-            onChangeText={(value) => this.setState({ question: value })}
-            onSubmitEditing={this.handleSubmit}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Enter The Answer...*"
-            value={this.state.answer}
-            onChangeText={(value) => this.setState({ answer: value })}
-            onSubmitEditing={this.handleSubmit}
-          />
-        </View>
-        <TouchableOpacity
-          style={[styles.button, disabled && styles.btnDisabled]}
-          onPress={this.handleSubmit}
-          disabled={disabled && disabled}
-        >
-          <Text style={[styles.submit]}>Submit Question</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
-
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -75,7 +19,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 28,
     marginBottom: 16,
-    color:blue
+    color: blue,
   },
   input: {
     borderWidth: 1,
@@ -102,6 +46,60 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
   },
 });
+
+const AddCard = (props) => {
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+
+  const { addCard, title, navigation } = props;
+
+  const handleSubmit = () => {
+    addCard(title, {
+      question,
+      answer,
+    });
+    addQuestionAPI(title, {
+      question,
+      answer,
+    });
+    navigation.navigate("DeckDetails", {
+      title,
+    });
+  };
+  const disabled = question === "" || answer === "" ? true : false;
+
+  return (
+    <View style={styles.wrapper}>
+      <View style={{ marginBottom: 8 }}>
+        <Text style={styles.label}>{title} Deck: </Text>
+        <Text style={styles.label}>Question: </Text>
+      </View>
+      <View style={{ marginBottom: 8 }}>
+        <TextInput
+          style={[styles.input, { marginBottom: 8 }]}
+          placeholder="Enter The Question...*"
+          value={question}
+          onChangeText={(value) => setQuestion(value)}
+          onSubmitEditing={handleSubmit}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter The Answer...*"
+          value={answer}
+          onChangeText={(value) => setAnswer(value)}
+          onSubmitEditing={handleSubmit}
+        />
+      </View>
+      <TouchableOpacity
+        style={[styles.button, disabled && styles.btnDisabled]}
+        onPress={handleSubmit}
+        disabled={disabled && disabled}
+      >
+        <Text style={[styles.submit]}>Submit Question</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const mapStateToProps = (state, { route }) => {
   const title = route.params.title || undefined;

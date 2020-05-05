@@ -77,7 +77,7 @@ const AddDeck = (props) => {
       </View>
       <TouchableOpacity
         style={[styles.Button, disabled && styles.buttonD]}
-        onPress={this.handleSubmit}
+        onPress={handleSubmit}
         disabled={disabled && disabled}
       >
         <Text style={[styles.ButtonText]}>Create Deck</Text>
